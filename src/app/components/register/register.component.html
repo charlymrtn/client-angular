@@ -5,7 +5,7 @@
     el registro se ha completado correctamente, <a [routerLink]="['/login']">identificate aqui</a>
   </div>
 
-  <div class="alert alert-danger" *ngIf="status != 'correct'">
+  <div class="alert alert-danger" *ngIf="status == 'error'">
     el registro con error
   </div>
 

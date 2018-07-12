@@ -14,6 +14,9 @@ export class LoginComponent implements OnInit{
   title:string;
   user: User;
   status:string;
+  token;
+  identity;
+
 
   constructor(
     private _route: ActivatedRoute,
@@ -26,30 +29,54 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(){
     console.log('Login component cargado correctamente');
+    this.logout();
   }
 
   onSubmit(form){
-    console.log(this.user);
+    // console.log(this.user);
 
     this._userService.signUp(this.user).subscribe(
       response => {
-          console.log(response);
+          if(response.status != "error"){
+            this.status = "correct";
+            this.token = response;
+            localStorage.setItem('token',this.token);
 
-          this._userService.signUp(this.user,true).subscribe(
-            response => {
-                console.log(response);
-            },
-            error => {
-              this.status = 'error';
-              console.log(<any>error);
-            }
-        );
+            this._userService.signUp(this.user,true).subscribe(
+              response => {
+                  this.identity = response;
+                  localStorage.setItem('identity',JSON.stringify(this.identity));
 
+                  this._router.navigate(['home']);
+              },
+              error => {
+                this.status = 'error';
+                console.log(<any>error);
+              }
+            );
+          }else{
+            this.status = "error";
+          }
       },
       error => {
         this.status = 'error';
         console.log(<any>error);
       }
-  );
+    );
+  }
+
+  logout(){
+    this._route.params.subscribe(params => {
+      let logout = +params['sure'];
+      if(logout == 1){
+        localStorage.removeItem('identity');
+        localStorage.removeItem('token');
+
+        this.identity = null;
+        this.token = null;
+
+        this._router.navigate(['home']);
+      }
+    });
   }
 }
