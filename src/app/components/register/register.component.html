@@ -1,6 +1,15 @@
 <div class="col-md-12">
   <h2>{{title}}</h2>
-  <form #registerFrom="ngForm" (ngSubmit)="onSubmit()" class="col-md-5">
+
+  <div class="alert alert-success" *ngIf="status == 'correct'">
+    el registro se ha completado correctamente, <a [routerLink]="['/login']">identificate aqui</a>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="status != 'correct'">
+    el registro con error
+  </div>
+
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-md-5">
     <p>
       <label for="name">Nombre</label>
       <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="user.name" required>
@@ -11,7 +20,7 @@
 
     <p>
       <label for="email">Correo Electronico</label>
-      <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="user.email" required>
+      <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" name="email" #email="ngModel" [(ngModel)]="user.email" required>
       <span *ngIf="!email.valid && email.touched">
         El correo es obligatorio
       </span>
@@ -25,6 +34,6 @@
       </span>
     </p>
 
-    <input type="submit" name="" value="Registrarte" class="btn btn-success">
+    <input type="submit" name="" value="Registrarte" class="btn btn-success" [disabled]="registerForm.form.invalid">
   </form>
 </div>

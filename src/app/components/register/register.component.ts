@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit{
     console.log('Register component cargado correctamente');
   }
 
-  onSubmit(){
+  onSubmit(form){
     console.log(this.user);
     // console.log(this._userService.pruebas());
     this._userService.register(this.user).subscribe(
@@ -36,12 +36,13 @@ export class RegisterComponent implements OnInit{
         if(response.status == 'correct'){
             this.status = response.status;
             this.user = new User(1,'ROLE_USER','','','');
-
+            form.reset();
         }else{
           this.status = 'error';
         }
       },
       error => {
+        this.status = 'error';
         console.log(<any>error);
       }
   );
