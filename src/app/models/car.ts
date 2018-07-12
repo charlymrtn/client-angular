@@ -5,7 +5,7 @@ export class Car(){
     description:string,
     price:number,
     status:string,
-    created_at,
-    updated_at
+    created_at:any,
+    updated_at:any
   ){}
 }
