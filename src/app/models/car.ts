@@ -1,4 +1,4 @@
-export class Car(){
+export class Car{
   constructor(
     id:number,
     title:string,
