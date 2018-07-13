@@ -1,4 +1,6 @@
 export class Car{
+  title:string;
+  id:number;
   constructor(
     id:number,
     title:string,

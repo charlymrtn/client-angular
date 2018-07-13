@@ -16,6 +16,8 @@ import { CarService } from '../../services/car.service';
 export class CarEditComponent implements OnInit {
   car: Car;
   page_title:string;
+  token;
+  status_car:string;
 
   constructor(
     private _route: ActivatedRoute,
@@ -23,17 +25,18 @@ export class CarEditComponent implements OnInit {
     private _userService: UserService,
     private _carService: CarService
   ) {
-
+    this.car = new Car(1,'','',0,'',null,null);
+    this.token = this._userService.getToken();
    }
 
   ngOnInit() {
-    this.getCar();
-  }
-
-  getCar(){
     this._route.params.subscribe(params => {
       let id = +params['id'];
+      this.getCar(id);
+    });
+  }
 
+  getCar(id){
       this._carService.getCar(id).subscribe(
         response => {
           if(response.status == 'success'){
@@ -44,10 +47,28 @@ export class CarEditComponent implements OnInit {
           }
         },
         error => {
-          console.log(<any>error)
+          console.log(<any>error);
         }
       );
-    });
+  }
+
+  onSubmit(form){
+    this._carService.update(this.token,this.car,this.car.id).subscribe(
+      response => {
+        if(response.status == 'success'){
+          this.status_car = 'success';
+          this.car = response.car;
+
+          this._router.navigate(['/coche',this.car.id]);
+        }else{
+          this.status_car = 'error';
+        }
+      },
+      error => {
+        console.log(<any>error);
+        this.status_car = 'error';
+      }
+    );
   }
 
 }

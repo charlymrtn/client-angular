@@ -19,7 +19,7 @@
         <td>
           <a [routerLink]="['/editar-coche',car.id]" class="btn btn-warning">Editar</a>
           <br>
-          <a href="#" class="btn btn-danger">Borrar</a>
+          <a (click)="deleteCar(car.id)" class="btn btn-danger">Borrar</a>
         </td>
       </tr>
     </table>

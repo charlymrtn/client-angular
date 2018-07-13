@@ -15,7 +15,7 @@ import { CarService } from '../../services/car.service';
 })
 export class CarDetailComponent implements OnInit {
 
-  car: Car;
+  public car: Car;
 
   constructor(
     private _route: ActivatedRoute,
@@ -23,7 +23,7 @@ export class CarDetailComponent implements OnInit {
     private _userService: UserService,
     private _carService: CarService
   ) {
-
+    this.car = new Car(1,'','',0,'',null,null);
    }
 
   ngOnInit() {
