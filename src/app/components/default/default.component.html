@@ -12,12 +12,12 @@
         <th>Acciones</th>
       </tr>
       <tr class="" *ngFor="let car of cars">
-        <td><strong>{{car.title}}</strong></td>
+        <td><a [routerLink]="['/coche',car.id]">{{car.title}}</a></td>
         <td>{{car.price}}</td>
         <td>{{car.status}}</td>
 
         <td>
-          <a [routerLink]="['editar-coche',car.id]" class="btn btn-warning">Editar</a>
+          <a [routerLink]="['/editar-coche',car.id]" class="btn btn-warning">Editar</a>
           <br>
           <a href="#" class="btn btn-danger">Borrar</a>
         </td>
